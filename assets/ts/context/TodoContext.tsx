@@ -1,4 +1,5 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
+import axios from "axios";
 
 export interface ITodo {
     name: string;
@@ -37,7 +38,20 @@ export const dummyContext: ITodo[] = [
 ];
 
 const TodoContextProvider: React.FC = ({ children }) => {
-    const [todos, setTodos] = useState<ITodo[]>(dummyContext);
+    const [todos, setTodos] = useState<ITodo[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        axios
+            .get<ITodo[]>("/api/todo/read")
+            .then((response) => {
+                setTodos(response.data);
+                setLoading(false);
+            })
+            .catch((err) => {
+                setLoading(false);
+            });
+    }, []);
     const createTodo = (todoName: string, todoDescription: string) => {
         let todo = {
             name: todoName,
@@ -75,7 +89,7 @@ const TodoContextProvider: React.FC = ({ children }) => {
                 deleteTodo: deleteTodo,
             }}
         >
-            {children}
+            {loading ? <div>Loading</div> : children}
         </TodoContext.Provider>
     );
 };
