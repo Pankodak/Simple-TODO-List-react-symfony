@@ -13,7 +13,7 @@ export type TodoContextType = {
         todoDescription: string,
         todoIndex: number
     ) => void;
-    deleteTodo: () => void;
+    deleteTodo: (todoIndex: number) => void;
 };
 
 export const TodoContext = createContext<TodoContextType | null>(null);
@@ -50,7 +50,6 @@ const TodoContextProvider: React.FC = ({ children }) => {
         todoDescription: string,
         todoIndex: number
     ) => {
-        console.log(todoName, todoDescription);
         setTodos((prevTodos: ITodo[]) => {
             let newTodos = [...prevTodos];
             newTodos = newTodos.map((todo, index) => {
@@ -62,7 +61,11 @@ const TodoContextProvider: React.FC = ({ children }) => {
             return newTodos;
         });
     };
-    const deleteTodo = () => {};
+    const deleteTodo = (todoIndex: number) =>
+        setTodos((prevTodos) =>
+            prevTodos.filter((_, index) => index !== todoIndex)
+        );
+
     return (
         <TodoContext.Provider
             value={{

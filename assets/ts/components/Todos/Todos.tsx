@@ -53,6 +53,7 @@ const Todos = () => {
                                 todo={todo}
                                 todoIndex={index}
                                 updateTodo={context.updateTodo}
+                                deleteTodo={context.deleteTodo}
                             />
                         </div>
                     ))}

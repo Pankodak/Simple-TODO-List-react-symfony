@@ -6,10 +6,17 @@ type Todo = {
     todo: ITodo;
     styleName: string;
     updateTodo: TodoContextType["updateTodo"];
+    deleteTodo: TodoContextType["deleteTodo"];
     todoIndex: number;
 };
 
-const Todo: React.FC<Todo> = ({ todo, styleName, updateTodo, todoIndex }) => {
+const Todo: React.FC<Todo> = ({
+    todo,
+    styleName,
+    updateTodo,
+    deleteTodo,
+    todoIndex,
+}) => {
     const [editing, setEditing] = useState(false);
     const [todoName, setTodoName] = useState(todo.name);
     const [todoDescription, setTodoDescription] = useState(todo.name);
@@ -60,7 +67,7 @@ const Todo: React.FC<Todo> = ({ todo, styleName, updateTodo, todoIndex }) => {
                         <button onClick={() => abortEditing()}>Cancel</button>
                     </>
                 )}
-                <button>Delete</button>
+                <button onClick={() => deleteTodo(todoIndex)}>Delete</button>
             </div>
         </>
     );
