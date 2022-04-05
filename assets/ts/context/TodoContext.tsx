@@ -8,7 +8,11 @@ export interface ITodo {
 export type TodoContextType = {
     todos: ITodo[];
     createTodo: (todoName: string, todoDescription: string) => void;
-    updateTodo: () => void;
+    updateTodo: (
+        todoName: string,
+        todoDescription: string,
+        todoIndex: number
+    ) => void;
     deleteTodo: () => void;
 };
 
@@ -34,14 +38,30 @@ export const dummyContext: ITodo[] = [
 
 const TodoContextProvider: React.FC = ({ children }) => {
     const [todos, setTodos] = useState<ITodo[]>(dummyContext);
-    const createTodo = (name: string, description: string) => {
+    const createTodo = (todoName: string, todoDescription: string) => {
         let todo = {
-            name: name,
-            description: description,
+            name: todoName,
+            description: todoDescription,
         };
         setTodos((prevTodos) => [todo, ...prevTodos]);
     };
-    const updateTodo = () => {};
+    const updateTodo = (
+        todoName: string,
+        todoDescription: string,
+        todoIndex: number
+    ) => {
+        console.log(todoName, todoDescription);
+        setTodos((prevTodos: ITodo[]) => {
+            let newTodos = [...prevTodos];
+            newTodos = newTodos.map((todo, index) => {
+                if (index !== todoIndex) return todo;
+                todo.name = todoName;
+                todo.description = todoDescription;
+                return todo;
+            });
+            return newTodos;
+        });
+    };
     const deleteTodo = () => {};
     return (
         <TodoContext.Provider

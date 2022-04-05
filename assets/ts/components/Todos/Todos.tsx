@@ -51,6 +51,8 @@ const Todos = () => {
                             <Todo
                                 styleName="todo__table__body-data"
                                 todo={todo}
+                                todoIndex={index}
+                                updateTodo={context.updateTodo}
                             />
                         </div>
                     ))}
