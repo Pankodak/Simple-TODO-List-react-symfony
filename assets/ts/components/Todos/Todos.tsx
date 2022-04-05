@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { TodoContext, ITodo, TodoContextType } from "../../context/TodoContext";
 
 import Todo from "./Todo/Todo";
-const Todos = () => {
+const Todos: React.FC = () => {
     const context = useContext(TodoContext) as TodoContextType;
     const [todoName, setTodoName] = useState("");
     const [todoDescription, setTodoDescription] = useState("");
