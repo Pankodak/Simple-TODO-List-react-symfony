@@ -2,6 +2,7 @@ import React, { createContext, useState } from "react";
 
 export interface ITodo {
     name: string;
+    description: string;
 }
 
 export type TodoContextType = {
@@ -13,8 +14,26 @@ export type TodoContextType = {
 
 export const TodoContext = createContext<TodoContextType | null>(null);
 
+export const dummyContext: ITodo[] = [
+    { name: "lorem", description: "ipsum" },
+    { name: "lorem", description: "ipsum" },
+    { name: "lorem", description: "ipsum" },
+    { name: "lorem", description: "ipsum" },
+    { name: "lorem", description: "ipsum" },
+    { name: "lorem", description: "ipsum" },
+    { name: "lorem", description: "ipsum" },
+    { name: "lorem", description: "ipsum" },
+    { name: "lorem", description: "ipsum" },
+    { name: "lorem", description: "ipsum" },
+    { name: "lorem", description: "ipsum" },
+    { name: "lorem", description: "ipsum" },
+    { name: "lorem", description: "ipsum" },
+    { name: "lorem", description: "ipsum" },
+    { name: "lorem", description: "ipsum" },
+];
+
 const TodoContextProvider: React.FC = ({ children }) => {
-    const [todos, setTodos] = useState<ITodo[]>([{ name: "Test" }]);
+    const [todos, setTodos] = useState<ITodo[]>(dummyContext);
     const createTodo = () => {};
     const updateTodo = () => {};
     const deleteTodo = () => {};

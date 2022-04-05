@@ -1,0 +1,31 @@
+.todo {
+    min-width: 100%;
+    &__form, 
+    &__table {
+        width: 80%;
+        margin: 0 auto;
+    }
+    &__table {
+        display: flex;
+        flex-direction: column;
+        &__header {
+            display: flex;
+            flex-direction: row;
+        }
+        &-row{
+            display: flex;
+            flex-basis: 100%;
+            border-bottom: 1px solid black;
+            & > :nth-child(1),
+            & > :nth-child(3) {
+                flex-basis: 15%;
+            }
+            & > :nth-child(3) {
+                text-align: right;
+            }
+            &> :nth-child(2) {
+                width: 70%;
+            }
+        }
+    }
+}
