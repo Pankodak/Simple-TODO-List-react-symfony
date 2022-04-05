@@ -7,7 +7,7 @@ export interface ITodo {
 
 export type TodoContextType = {
     todos: ITodo[];
-    createTodo: () => void;
+    createTodo: (todoName: string, todoDescription: string) => void;
     updateTodo: () => void;
     deleteTodo: () => void;
 };
@@ -34,7 +34,13 @@ export const dummyContext: ITodo[] = [
 
 const TodoContextProvider: React.FC = ({ children }) => {
     const [todos, setTodos] = useState<ITodo[]>(dummyContext);
-    const createTodo = () => {};
+    const createTodo = (name: string, description: string) => {
+        let todo = {
+            name: name,
+            description: description,
+        };
+        setTodos((prevTodos) => [todo, ...prevTodos]);
+    };
     const updateTodo = () => {};
     const deleteTodo = () => {};
     return (
