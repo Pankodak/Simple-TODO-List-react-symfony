@@ -4,10 +4,10 @@ import { ITodo, TodoContextType } from "../../../context/TodoContext";
 
 type Todo = {
     todo: ITodo;
+    requestOnGoing: boolean;
     styleName: string;
     updateTodo: TodoContextType["updateTodo"];
     deleteTodo: TodoContextType["deleteTodo"];
-    todoIndex: number;
 };
 
 const Todo: React.FC<Todo> = ({
@@ -15,21 +15,21 @@ const Todo: React.FC<Todo> = ({
     styleName,
     updateTodo,
     deleteTodo,
-    todoIndex,
+    requestOnGoing,
 }) => {
     const [editing, setEditing] = useState(false);
     const [todoName, setTodoName] = useState(todo.name);
-    const [todoDescription, setTodoDescription] = useState(todo.name);
+    const [todoDescription, setTodoDescription] = useState(todo.description);
     const handleTodoNameChange = (value: string) => setTodoName(value);
     const handleTodoDescriptionChange = (value: string) =>
         setTodoDescription(value);
     const abortEditing = () => {
-        setEditing(false);
         setTodoName(todo.name);
         setTodoDescription(todo.description);
+        setEditing(false);
     };
     const submitTodo = () => {
-        updateTodo(todoName, todoDescription, todoIndex);
+        updateTodo(todoName, todoDescription, todo.id);
         setEditing(false);
     };
     return (
@@ -42,6 +42,7 @@ const Todo: React.FC<Todo> = ({
                         type="text"
                         value={todoName}
                         onChange={(e) => handleTodoNameChange(e.target.value)}
+                        disabled={requestOnGoing}
                     />
                 )}
             </div>
@@ -55,19 +56,40 @@ const Todo: React.FC<Todo> = ({
                         onChange={(e) =>
                             handleTodoDescriptionChange(e.target.value)
                         }
+                        disabled={requestOnGoing}
                     />
                 )}
             </div>
             <div className={styleName}>
                 {!editing ? (
-                    <button onClick={() => setEditing(true)}>Edit</button>
+                    <button
+                        disabled={requestOnGoing}
+                        onClick={() => setEditing(true)}
+                    >
+                        Edit
+                    </button>
                 ) : (
                     <>
-                        <button onClick={() => submitTodo()}>Submit</button>
-                        <button onClick={() => abortEditing()}>Cancel</button>
+                        <button
+                            disabled={requestOnGoing}
+                            onClick={() => submitTodo()}
+                        >
+                            Submit
+                        </button>
+                        <button
+                            disabled={requestOnGoing}
+                            onClick={() => abortEditing()}
+                        >
+                            Cancel
+                        </button>
                     </>
                 )}
-                <button onClick={() => deleteTodo(todoIndex)}>Delete</button>
+                <button
+                    disabled={requestOnGoing}
+                    onClick={() => deleteTodo(todo.id)}
+                >
+                    Delete
+                </button>
             </div>
         </>
     );

@@ -26,8 +26,10 @@ const Todos = () => {
                     id=""
                     placeholder="todo name"
                     value={todoName}
+                    disabled={context.requestOnGoing}
                 />
                 <input
+                    disabled={context.requestOnGoing}
                     onChange={(e) => handleSetTodoDescription(e.target.value)}
                     type="text"
                     name=""
@@ -35,7 +37,9 @@ const Todos = () => {
                     placeholder="todo description"
                     value={todoDescription}
                 />
-                <button type="submit">Submit</button>
+                <button disabled={context.requestOnGoing} type="submit">
+                    Submit
+                </button>
             </form>
             <div className="todo__table">
                 <div className="todo__table__header">
@@ -46,14 +50,14 @@ const Todos = () => {
                     </div>
                 </div>
                 <div className="todo__table__body">
-                    {context.todos.map((todo: ITodo, index: number) => (
-                        <div key={index} className="todo__table-row">
+                    {context.todos.map((todo: ITodo) => (
+                        <div key={todo.id} className="todo__table-row">
                             <Todo
-                                styleName="todo__table__body-data"
                                 todo={todo}
-                                todoIndex={index}
+                                styleName="todo__table__body-data"
                                 updateTodo={context.updateTodo}
                                 deleteTodo={context.deleteTodo}
+                                requestOnGoing={context.requestOnGoing}
                             />
                         </div>
                     ))}
